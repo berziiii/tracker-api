@@ -6,6 +6,7 @@ RSpec.describe 'Authentication API' do
       email: 'alice@example.com',
       password: 'foobarbaz',
       password_confirmation: 'foobarbaz'
+      admin: true
     }
   end
 
