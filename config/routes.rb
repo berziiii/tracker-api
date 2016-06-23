@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :profiles, except: [:new, :edit]
   # Cohort Routes
   resources :cohorts, except: [:new, :edit]
   # Program Routes

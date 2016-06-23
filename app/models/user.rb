@@ -1,6 +1,5 @@
-#
 class User < ActiveRecord::Base
   include Authentication
   has_many :examples
-  has_many :cohorts
+  has_one :profile
 end
