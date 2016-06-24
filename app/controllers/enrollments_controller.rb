@@ -1,4 +1,4 @@
-class EnrollmentsController < ApplicationController
+class EnrollmentsController < ProtectedController
   before_action :set_enrollment, only: [:show, :update, :destroy]
   before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
 

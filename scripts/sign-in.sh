@@ -1,10 +1,9 @@
 #!/bin/bash
 
-curl --include --request POST http://localhost:3000/sign-in \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "berzelba@gmail.com",
-      "password": "blah"
+curl --include --request PATCH http://localhost:3000/profiles/1 \
+--header "Content-Type: application/json" \
+--data '{
+    "profile": {
+      "first_name": "Bob"
     }
   }'

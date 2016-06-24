@@ -1,6 +1,6 @@
-class ProfilesController < ApplicationController
+class ProfilesController < ProtectedController
   before_action :set_profile, only: [:show, :update, :destroy]
-  before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
+  # before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
 
   # GET /profiles
   # GET /profiles.json
@@ -31,7 +31,6 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-    @profile = Profile.find(params[:id])
 
     if @profile.update(profile_params)
       head :no_content
@@ -51,7 +50,7 @@ class ProfilesController < ApplicationController
   private
 
     def set_profile
-      @profile = Profile.find(params[:id])
+      @profile = current_user.profile
     end
 
     def profile_params
