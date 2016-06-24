@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :enrollments, except: [:new, :edit]
   resources :profiles, except: [:new, :edit]
   # Cohort Routes
   resources :cohorts, except: [:new, :edit]
   # Program Routes
   resources :programs, except: [:new, :edit]
+  get '/profiles/admin' => 'profiles#admin'
 
   # User Routes
   resources :users, only: [:index, :show]
