@@ -1,5 +1,6 @@
 class CohortsController < ApplicationController
   before_action :set_cohort, only: [:show, :update, :destroy]
+  before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
 
   # GET /cohorts
   # GET /cohorts.json
