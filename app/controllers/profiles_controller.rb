@@ -1,6 +1,6 @@
-class ProfilesController < ProtectedController
-  before_action :set_profile, only: [:show, :update, :destroy]
-  # before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
+class ProfilesController < ApplicationController
+  before_action :set_profile, only: [:set, :update, :destroy]
+  before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
 
   # GET /profiles
   # GET /profiles.json
@@ -13,6 +13,7 @@ class ProfilesController < ProtectedController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @profile = Profile.find(params[:id])
     render json: @profile
   end
 
@@ -50,7 +51,7 @@ class ProfilesController < ProtectedController
   private
 
     def set_profile
-      @profile = current_user.profile
+      @profile = Profile.find(params[:id])
     end
 
     def profile_params
