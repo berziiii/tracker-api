@@ -17,4 +17,7 @@ Rails.application.routes.draw do
 
   # Example Routes
   resources :examples, except: [:new, :edit]
+
+  # EnrollmentId ruote
+  get '/enrollments/find/:cohort_id' => 'enrollments#findEnrollmentId'
 end

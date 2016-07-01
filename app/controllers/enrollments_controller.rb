@@ -48,6 +48,11 @@ class EnrollmentsController < ProtectedController
     head :no_content
   end
 
+  def findEnrollmentId
+    @enrollment = Enrollment.select { |enrollment| enrollment if enrollment.profile_id.to_s == params[:profile_id] and enrollment.cohort_id.to_s == params[:cohort_id]  }
+    render json: @enrollment
+  end
+
   private
 
     def set_enrollment
@@ -55,6 +60,10 @@ class EnrollmentsController < ProtectedController
     end
 
     def enrollment_params
-      params.require(:enrollment).permit(:profile_id, :cohort_id)
+      params.require(:enrollment).permit(:profile_id, :cohort_id, :status)
     end
+
+    # def findEnrollmentId_params
+    #   params.require(:enrollment).permit(:profile_id, :cohort)
+    # end
 end

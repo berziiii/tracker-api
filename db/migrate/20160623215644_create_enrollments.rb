@@ -3,6 +3,7 @@ class CreateEnrollments < ActiveRecord::Migration
     create_table :enrollments do |t|
       t.references :profile, index: true, foreign_key: true
       t.references :cohort, index: true, foreign_key: true
+      t.string :status
 
       t.timestamps null: false
     end
