@@ -5,9 +5,12 @@ class ProgramsController < ProtectedController
   # GET /programs
   # GET /programs.json
   def index
-    @programs = Program.all
-
-    render json: @programs
+    if (current_user.admin)
+      @programs = Program.all
+      render json: @programs
+    else
+      render text: current_user.admin
+    end
   end
 
   # GET /programs/1
@@ -43,9 +46,13 @@ class ProgramsController < ProtectedController
   # DELETE /programs/1
   # DELETE /programs/1.json
   def destroy
-    @program.destroy
-
-    head :no_content
+    if (current_user.admin)
+      @program.destroy
+      render text: "Program Destroyed"
+      head :no_content
+    else
+      render text: "You are not and admin"
+    end
   end
 
   private

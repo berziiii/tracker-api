@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20160623215644) do
   create_table "enrollments", force: :cascade do |t|
     t.integer  "profile_id"
     t.integer  "cohort_id"
-    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
