@@ -1,19 +1,26 @@
 class EnrollmentsController < ProtectedController
   before_action :set_enrollment, only: [:show, :update, :destroy]
-  before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
+  # before_action :authenticate, only: [:index, :create, :show, :update, :destroy]
 
   # GET /enrollments
   # GET /enrollments.json
   def index
-    @enrollments = Enrollment.all
-
-    render json: @enrollments
+    if current_user.admin === true
+      @enrollments = Enrollment.all
+      render json: @enrollments
+    else
+      render json: @enrollment.errors, status: :unprocessable_entity
+    end
   end
 
   # GET /enrollments/1
   # GET /enrollments/1.json
   def show
-    render json: @enrollment
+    if current_user.admin === true
+      render json: @enrollment
+    else
+      render json: @enrollment.errors, status: :unprocessable_entity
+    end
   end
 
   # POST /enrollments
@@ -21,7 +28,7 @@ class EnrollmentsController < ProtectedController
   def create
     @enrollment = Enrollment.new(enrollment_params)
 
-    if @enrollment.save
+    if current_user.admin === true && @enrollment.save
       render json: @enrollment, status: :created, location: @enrollment
     else
       render json: @enrollment.errors, status: :unprocessable_entity
@@ -33,7 +40,7 @@ class EnrollmentsController < ProtectedController
   def update
     @enrollment = Enrollment.find(params[:id])
 
-    if @enrollment.update(enrollment_params)
+    if current_user.admin === true && @enrollment.update(enrollment_params)
       head :no_content
     else
       render json: @enrollment.errors, status: :unprocessable_entity
@@ -43,14 +50,20 @@ class EnrollmentsController < ProtectedController
   # DELETE /enrollments/1
   # DELETE /enrollments/1.json
   def destroy
-    @enrollment.destroy
-
-    head :no_content
+    if current_user.admin === true && @enrollment.destroy
+      head :no_content
+    else
+      render json: @enrollment.errors, status: :unprocessable_entity
+    end
   end
 
   def findEnrollmentId
     @enrollment = Enrollment.select { |enrollment| enrollment if enrollment.profile_id.to_s == params[:profile_id] and enrollment.cohort_id.to_s == params[:cohort_id]  }
-    render json: @enrollment
+    if current_user.admin === true
+      render json: @enrollment
+    else
+      render json: @enrollment.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -62,8 +75,4 @@ class EnrollmentsController < ProtectedController
     def enrollment_params
       params.require(:enrollment).permit(:profile_id, :cohort_id, :status)
     end
-
-    # def findEnrollmentId_params
-    #   params.require(:enrollment).permit(:profile_id, :cohort)
-    # end
 end

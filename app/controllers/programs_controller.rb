@@ -5,18 +5,22 @@ class ProgramsController < ProtectedController
   # GET /programs
   # GET /programs.json
   def index
-    if (current_user.admin)
+    if current_user.admin === true
       @programs = Program.all
       render json: @programs
     else
-      render text: current_user.admin
+      render json: @programs.errors, status: :unprocessable_entity
     end
   end
 
   # GET /programs/1
   # GET /programs/1.json
   def show
-    render json: @program
+    if current_user.admin === true
+      render json: @program
+    else
+      render json: @program.errors, status: :unprocessable_entity
+    end
   end
 
   # POST /programs
@@ -24,7 +28,7 @@ class ProgramsController < ProtectedController
   def create
     @program = Program.new(program_params)
 
-    if @program.save
+    if current_user.admin === true && @program.save
       render json: @program, status: :created, location: @program
     else
       render json: @program.errors, status: :unprocessable_entity
@@ -36,7 +40,7 @@ class ProgramsController < ProtectedController
   def update
     @program = Program.find(params[:id])
 
-    if @program.update(program_params)
+    if current_user.admin === true && @program.update(program_params)
       head :no_content
     else
       render json: @program.errors, status: :unprocessable_entity
@@ -46,12 +50,11 @@ class ProgramsController < ProtectedController
   # DELETE /programs/1
   # DELETE /programs/1.json
   def destroy
-    if (current_user.admin)
+    if current_user.admin
       @program.destroy
-      render text: "Program Destroyed"
       head :no_content
     else
-      render text: "You are not and admin"
+      render json: @program.errors, status: :unprocessable_entity
     end
   end
 
