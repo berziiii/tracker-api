@@ -7,8 +7,9 @@ class CohortsController < ProtectedController
   def index
     if current_user.admin === true
       @cohorts = Cohort.all
+      render json: @cohorts
     elsif current_user.admin === false
-      @cohort = current_user.profile.cohort
+      @cohort = current_user.profile.cohorts
       render json: @cohort
     else
       render json: @cohorts.errors, status: :unprocessable_entity

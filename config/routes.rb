@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :cohorts, except: [:new, :edit]
   # Program Routes
   resources :programs, except: [:new, :edit]
-  get '/profiles/admin' => 'profiles#admin'
+  # get '/profiles/admin' => 'profiles#admin'
 
   # User Routes
   resources :users, only: [:index, :show]

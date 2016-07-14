@@ -47,7 +47,7 @@ class ProfilesController < ProtectedController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-    if current_user.profile.id === params[:id] && @profile.update(profile_params)
+    if current_user.profile.id === Profile.find(params[:id]) && @profile.update(profile_params)
       head :no_content
     else
       render json: @profile.errors, status: :unprocessable_entity
