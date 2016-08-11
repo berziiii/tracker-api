@@ -91,3 +91,8 @@ Enrollment.create([
     {profile_id: 18, cohort_id: 1},
     {profile_id: 19, cohort_id: 1}
   ])
+
+Attendence.create([
+  { day: '20160802', option: 'Late', note: 'Andrea informed Brian that she would be running about 20 minutes late today.', profile_id: 4},
+  { day: '20160802', option: 'Absent', note: 'Josh was a no show. He did not inform any member of the instructional team that he would be out.', profile_id: 12},
+])  

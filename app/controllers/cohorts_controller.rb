@@ -68,6 +68,6 @@ class CohortsController < ProtectedController
     end
 
     def cohort_params
-      params.require(:cohort).permit(:title, :start_date, :end_date, :program_id)
+      params.require(:cohort).permit(:title, :start_date, :end_date, :market, :program_id)
     end
 end

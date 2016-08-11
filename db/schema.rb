@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623215644) do
+ActiveRecord::Schema.define(version: 20160802185344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendences", force: :cascade do |t|
+    t.date     "day",        null: false
+    t.string   "option",     null: false
+    t.text     "note",       null: false
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "attendences", ["profile_id"], name: "index_attendences_on_profile_id", using: :btree
 
   create_table "cohorts", force: :cascade do |t|
     t.string   "title"
@@ -78,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160623215644) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["token"], name: "index_users_on_token", unique: true, using: :btree
 
+  add_foreign_key "attendences", "profiles"
   add_foreign_key "cohorts", "programs"
   add_foreign_key "enrollments", "cohorts"
   add_foreign_key "enrollments", "profiles"

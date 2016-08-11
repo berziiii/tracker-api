@@ -8,7 +8,7 @@ class EnrollmentSerializer < ActiveModel::Serializer
   end
 
   def profile
-    object.cohort.id
+    object.profile.id
   end
 
 end
