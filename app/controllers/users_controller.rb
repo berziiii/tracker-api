@@ -6,6 +6,7 @@ class UsersController < ProtectedController
   def signup
     user = User.create(user_creds)
     if user.valid?
+      # Profile.build()
       render json: user, status: :created
     else
       head :bad_request

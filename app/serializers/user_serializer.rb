@@ -6,5 +6,5 @@ class UserSerializer < ActiveModel::Serializer
   def profile
     object.profile.id
   end
-  
+
 end

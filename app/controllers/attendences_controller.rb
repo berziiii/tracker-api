@@ -18,10 +18,10 @@ class AttendencesController < ProtectedController
   # GET /attendences/1
   # GET /attendences/1.json
   def show
-    if current_user.admin === true
+    if current_user.admin
       render json: @attendence
-    elsif current_user.admin === false
-      @attendence = current_user.profile.attendence.find(params[:id])
+    elsif !current_user.admin
+      @attendence = Attendence.where(profile_id: current_user.profile.id)
       render json: @attendence
     else
       render json: @attendence.errors, status: :unprocessable_entity
@@ -31,7 +31,7 @@ class AttendencesController < ProtectedController
   # POST /attendences
   # POST /attendences.json
   def create
-    if current_user.admin === true
+    if current_user.admin
       @attendence = Attendence.new(attendence_params)
 
       if @attendence.save
@@ -49,7 +49,7 @@ class AttendencesController < ProtectedController
   # PATCH/PUT /attendences/1
   # PATCH/PUT /attendences/1.json
   def update
-    if current_user.admin === true
+    if current_user.admin
       @attendence = Attendence.find(params[:id])
 
       if @attendence.update(attendence_params)
@@ -65,7 +65,7 @@ class AttendencesController < ProtectedController
   # DELETE /attendences/1
   # DELETE /attendences/1.json
   def destroy
-    if current_user.admin === true
+    if current_user.admin
       @attendence.destroy
 
       head :no_content
