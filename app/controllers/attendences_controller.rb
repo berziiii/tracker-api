@@ -4,10 +4,10 @@ class AttendencesController < ProtectedController
   # GET /attendences
   # GET /attendences.json
   def index
-    if current_user.admin ===  true
+    if current_user.admin
       @attendences = Attendence.all
       render json: @attendences
-    elsif current_user.admin === false
+    elsif !current_user.admin
       @attendences = current_user.profile.attendences
       render json: @attendences
     else
@@ -19,7 +19,6 @@ class AttendencesController < ProtectedController
   # GET /attendences/1.json
   def show
     if current_user.admin === true
-      @attendence = Attendence.find(params[:id])
       render json: @attendence
     elsif current_user.admin === false
       @attendence = current_user.profile.attendence.find(params[:id])

@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(version: 20160802185344) do
   add_index "attendences", ["profile_id"], name: "index_attendences_on_profile_id", using: :btree
 
   create_table "cohorts", force: :cascade do |t|
-    t.string   "title"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.string   "market"
+    t.string   "title",      null: false
+    t.date     "start_date", null: false
+    t.date     "end_date",   null: false
+    t.string   "market",     null: false
     t.integer  "program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20160802185344) do
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
   create_table "enrollments", force: :cascade do |t|
-    t.integer  "profile_id"
-    t.integer  "cohort_id"
+    t.integer  "profile_id", null: false
+    t.integer  "cohort_id",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -59,20 +59,21 @@ ActiveRecord::Schema.define(version: 20160802185344) do
   add_index "examples", ["user_id"], name: "index_examples_on_user_id", using: :btree
 
   create_table "profiles", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "first_name",      null: false
+    t.string   "last_name",       null: false
     t.string   "gender"
-    t.string   "phone_number"
-    t.string   "github_username"
+    t.string   "phone_number",    null: false
+    t.string   "github_username", null: false
     t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
+  add_index "profiles", ["github_username"], name: "index_profiles_on_github_username", unique: true, using: :btree
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "programs", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
